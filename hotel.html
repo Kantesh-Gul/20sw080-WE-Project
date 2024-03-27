@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book your residency</title>
+    <!-- Add necessary stylesheets and scripts -->
+    <style>
+        /* Add your custom styles here */
+        body {
+            background-image: url('./assets/files/logo.png'); /* Specify the path to your image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            /* Add other background properties as needed */
+            font-family: Arial, sans-serif; /* Example font family */
+            color: #333; /* Example text color */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #bookingDetails {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1> Hotel Booking</h1>
+    
+    <!-- Display available hotels -->
+    <h2>Hotels</h2>
+    <table id="hotels">
+        <thead>
+            <tr>
+                <th>Hotel</th>
+                <th>Location</th>
+                <th>Price per Night</th>
+                <th>Available Rooms</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Hotel data will be populated dynamically using JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- Booking form for hotels -->
+    <h3>Book Hotel</h3>
+    <form id="bookingForm" action="booking.php" method="POST" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="hotel">Select Hotel:</label>
+        <select id="hotel" name="hotel" required>
+            <!-- Hotel options will be populated dynamically using JavaScript -->
+        </select><br><br>
+        <label for="contactCode">Country Code:</label>
+        <select id="contactCode" name="contactCode" required onchange="updateMobilePattern()">
+            <option value="+1">+1 (USA)</option>
+            <option value="+44">+44 (UK)</option>
+            <option value="+92">+92 (pak)</option>
+            <option value="+91">+91 (Ind)</option>
+            <option value="+880">+880 (Bang)</option>
+            <!-- Add more country codes as needed -->
+        </select>
+        <label for="contactNumber">Mobile No:</label>
+        <input type="number" id="contactNumber" name="contactNumber" required value=""><br><br>
+        <label for="cnic">CNIC:</label>
+        <input type="text" id="cnic" name="cnic" required><br><br>
+        <label for="picture">Upload Receipt:</label>
+        <input type="file" id="picture" name="picture" accept="image/*" required><br><br>
+        <!-- Add CAPTCHA here -->
+        <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div><br><br>
+        <button type="submit">Book</button>
+    </form>
+
+    <!-- Booking details -->
+    <div id="bookingDetails"></div>
+
+    <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./booking.html">Register</a></li>
+        <li><a href="./info.html">About Us</a></li>
+        <li><a href="./contact.html">Contact Us</a></li>
+        <li><a href="./flight.html">Flights</a></li>
+        <li><a href="./hotel.html">Hotels</a></li>
+        <li><a href="./travel.html">Travel</a></li>
+    </ul>
+
+    <!-- Add necessary JavaScript code to handle hotel booking -->
+    <script>
+        // Sample hotel data
+        const hotels = [
+            { hotel: 'Hotel A', location: 'City A', price: '150', rooms: '10' },
+            { hotel: 'Hotel B', location: 'City B', price: '200', rooms: '20' },
+            { hotel: 'Hotel C', location: 'City C', price: '180', rooms: '15' },
+            { hotel: 'Hotel D', location: 'City D', price: '220', rooms: '25' },
+            { hotel: 'Hotel E', location: 'City E', price: '250', rooms: '18' }
+        ];
+
+        // Function to populate hotels in the table
+        function populateHotels() {
+            const tableBody = document.querySelector('#hotels tbody');
+            tableBody.innerHTML = '';
+            hotels.forEach(hotel => {
+                const row = `<tr>
+                                <td>${hotel.hotel}</td>
+                                <td>${hotel.location}</td>
+                                <td>$${hotel.price}</td>
+                                <td>${hotel.rooms}</td>
+                            </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Function to populate hotel options in the select dropdown
+        function populateHotelOptions() {
+            const selectHotel = document.querySelector('#hotel');
+            selectHotel.innerHTML = '';
+            hotels.forEach(hotel => {
+                const option = `<option value="${hotel.hotel}">${hotel.hotel} - ${hotel.location}</option>`;
+                selectHotel.innerHTML += option;
+            });
+        }
+
+        // Function to handle hotel booking submission
+        function handleHotelBooking(event) {
+            event.preventDefault();
+            const name = document.querySelector('#name').value;
+            const email = document.querySelector('#email').value;
+            const selectedHotel = document.querySelector('#hotel').value;
+            const checkIn = document.querySelector('#checkIn').value;
+            const checkOut = document.querySelector('#checkOut').value;
+
+            // Perform validation and booking process
+            // For now, just display a success message
+            const bookingDetails = document.querySelector('#bookingDetails');
+            bookingDetails.innerHTML = `<p>Thank you, ${name}! Your hotel booking (${selectedHotel}) has been confirmed from ${checkIn} to ${checkOut}.</p>`;
+        }
+
+        // Populate hotels and hotel options on page load
+        window.onload = function () {
+            populateHotels();
+            populateHotelOptions();
+
+            const hotelBookingForm = document.querySelector('#hotelBookingForm');
+            hotelBookingForm.addEventListener('submit', handleHotelBooking);
+        };
+    </script>
+    <!-- Include Google reCAPTCHA script here -->
+</body>
+
+</html>

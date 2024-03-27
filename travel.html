@@ -1,0 +1,129 @@
+ -<!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Travel Services</title>
+     <!-- Add necessary stylesheets and scripts -->
+     <style>
+         /* Add your custom styles here */
+         body {
+             background-image: url('./assets/files/trainw2.jpeg'); /* Specify the path to your image */
+             background-size: cover;
+             background-repeat: no-repeat;
+             background-attachment: fixed;
+             /* Add other background properties as needed */
+             font-family: Arial, sans-serif; /* Example font family */
+             color: #333; /* Example text color */
+         }
+ 
+         table {
+             width: 100%;
+             border-collapse: collapse;
+             margin-bottom: 20px;
+         }
+ 
+         th, td {
+             padding: 8px;
+             text-align: left;
+             border-bottom: 1px solid #ddd;
+         }
+ 
+         th {
+             background-color: #f2f2f2;
+         }
+     </style>
+ </head>
+ 
+ <body>
+     <h1>Travel Services</h1>
+     <!-- Display available trains -->
+     <table id="trains">
+         <thead>
+             <tr>
+                 <th>Train</th>
+                 <th>Destination</th>
+                 <th>Departure Time</th>
+                 <th>Price</th>
+             </tr>
+         </thead>
+         <tbody>
+             <!-- Train data will be populated dynamically using JavaScript -->
+         </tbody>
+     </table>
+  <!-- Booking form -->
+  <form id="bookingForm" action="booking.php" method="POST" enctype="multipart/form-data">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+    <label for="train">Select Train:</label>
+        <select id="train" name="train" required>
+            <!-- Train options will be populated dynamically using JavaScript -->
+        </select><br><br>
+    <label for="contactCode">Country Code:</label>
+    <select id="contactCode" name="contactCode" required onchange="updateMobilePattern()">
+        <option value="+1">+1 (USA)</option>
+        <option value="+44">+44 (UK)</option>
+        <option value="+92">+92 (pak)</option>
+        <option value="+91">+91 (Ind)</option>
+        <option value="+880">+880 (Bang)</option>
+        <!-- Add more country codes as needed -->
+    </select>
+    <label for="contactNumber">Mobile No:</label>
+    <input type="number" id="contactNumber" name="contactNumber" required value=""><br><br>
+    <label for="cnic">CNIC:</label>
+    <input type="text" id="cnic" name="cnic" required><br><br>
+    <label for="picture">Upload Receipt</label>
+    <input type="file" id="picture" name="picture" accept="image/*" required><br><br>
+    <!-- Add CAPTCHA here -->
+    <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div><br><br>
+    <button type="submit">Book</button>
+</form>
+
+     <ul>
+        <li><a href="./index.html">home</a></li>
+         <li><a href="./booking.html">Register</a></li>
+         <li><a href="./info.html">About Us</a></li>
+         <li><a href="./contact.html">Contact Us</a></li>
+         <li><a href="./flight.html">Flights</a></li>
+         <li><a href="./hotel.html">Hotels</a></li>
+         <li><a href="./travel.html">Travel</a></li>
+     </ul>
+ 
+     <!-- Add necessary JavaScript code to handle booking -->
+     <script>
+         // Sample train data
+         const trains = [
+             { train: 'Train A', destination: 'Egypt', departureTime: '10:00 AM', price: '65000' },
+             { train: 'Train B', destination: 'Karala', departureTime: '11:30 AM', price: '95000' },
+             { train: 'Train C', destination: 'Kashmir', departureTime: '1:00 PM', price: '20000' },
+             { train: 'Train D', destination: 'Paris', departureTime: '3:00 PM', price: '75000' }
+         ];
+ 
+         // Function to populate trains in the table
+         function populateTrains() {
+             const tableBody = document.querySelector('#trains tbody');
+             tableBody.innerHTML = '';
+             trains.forEach(train => {
+                 const row = `<tr>
+                                 <td>${train.train}</td>
+                                 <td>${train.destination}</td>
+                                 <td>${train.departureTime}</td>
+                                 <td>${train.price}</td>
+                             </tr>`;
+                 tableBody.innerHTML += row;
+             });
+         }
+ 
+         // Populate trains on page load
+         window.onload = function () {
+             populateTrains();
+         };
+     </script>
+ </body>
+ 
+ </html>
+ 
